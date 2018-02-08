@@ -17,6 +17,9 @@ Public Class MainForm
     Private tempVideoKey As String
     Private videoWriterLock As Object
 
+    Private Const imageExtension = ".jpg"
+    Private Const videoExtension = ".avi"
+
     Sub New()
 
         InitializeComponent()
@@ -95,14 +98,14 @@ Public Class MainForm
 
     Private Sub StartRecording()
         tempVideoKey = Guid.NewGuid.ToString
-        videoWriter.Open(Path.Combine(Path.GetTempPath, tempVideoKey & ".avi"),
+        videoWriter.Open(Path.Combine(Path.GetTempPath, tempVideoKey & videoExtension),
                          videoSource.VideoResolution.FrameSize.Width,
                          videoSource.VideoResolution.FrameSize.Height,
                          videoSource.VideoResolution.AverageFrameRate,
                          VideoCodec.MPEG4)
     End Sub
 
-    Private Sub StopRecording(image As Image)
+    Private Sub StopRecording(image As Bitmap)
         videoWriter.Close()
 
         Dim listViewItem As New ListViewItem
@@ -110,7 +113,7 @@ Public Class MainForm
             .Name = tempVideoKey
             .Text = tempVideoKey
             .ImageKey = tempVideoKey
-            .Tag = "avi"
+            .Tag = videoExtension
         End With
 
         Me.BeginInvoke(Sub()
@@ -126,24 +129,28 @@ Public Class MainForm
         End SyncLock
     End Sub
 
-    Private Sub CaptureImage(image As Image)
+    Private Sub CaptureImage(image As Bitmap)
 
         Dim imageKey = Guid.NewGuid().ToString
 
-        image.Save(Path.Combine(Path.GetTempPath, imageKey & ".bmp"))
+        ImageStore.SaveToJpeg(image, Path.Combine(Path.GetTempPath, imageKey & imageExtension))
 
         Dim listViewItem As New ListViewItem
         With listViewItem
             .Name = imageKey
             .Text = imageKey
             .ImageKey = imageKey
-            .Tag = "bmp"
+            .Tag = imageExtension
         End With
 
         BeginInvoke(Sub()
                         captureIml.Images.Add(imageKey, image)
                         captureLsv.Items.Add(listViewItem)
                     End Sub)
+    End Sub
+
+    Private Sub SaveToJpeg(image As Bitmap, imageKey As String)
+
     End Sub
 
     Private Sub DisplayElapsedLabel()
@@ -154,7 +161,7 @@ Public Class MainForm
     End Sub
 
     Private Function GetFileName(listViewItem As ListViewItem) As String
-        Dim fileName = String.Format("{0}.{1}", listViewItem.ImageKey, listViewItem.Tag)
+        Dim fileName = String.Format("{0}{1}", listViewItem.ImageKey, listViewItem.Tag)
         Return Path.Combine(Path.GetTempPath, fileName)
     End Function
 

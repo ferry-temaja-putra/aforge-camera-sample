@@ -187,7 +187,9 @@ Partial Class MainForm
         Me.Controls.Add(Me.captureLsv)
         Me.Controls.Add(Me.commandPnl)
         Me.Name = "MainForm"
-        Me.Text = "Form1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "AForge Camera Sample"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.videoPnl.ResumeLayout(False)
         Me.videoPnl.PerformLayout()
         CType(Me.videoPic, System.ComponentModel.ISupportInitialize).EndInit()
