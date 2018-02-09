@@ -1,9 +1,13 @@
-﻿Imports System.IO
+﻿Imports System.Drawing
+Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Threading
 Imports AForge.Video.DirectShow
 Imports AForge.Video.FFMPEG
 
 Public Class MainForm
+
+#Region " Private Variables "
 
     Private videoDevices As FilterInfoCollection
     Private videoSource As VideoCaptureDevice
@@ -19,6 +23,10 @@ Public Class MainForm
 
     Private Const imageExtension = ".jpg"
     Private Const videoExtension = ".avi"
+
+#End Region
+
+#Region " Constructors "
 
     Sub New()
 
@@ -39,6 +47,10 @@ Public Class MainForm
         videoWriterLock = New Object
 
     End Sub
+
+#End Region
+
+#Region " Private Methods "
 
     Private Sub ConfigureVideoSource()
 
@@ -133,7 +145,7 @@ Public Class MainForm
 
         Dim imageKey = Guid.NewGuid().ToString
 
-        ImageStore.SaveToJpeg(image, Path.Combine(Path.GetTempPath, imageKey & imageExtension))
+        SaveToJpeg(image, Path.Combine(Path.GetTempPath, imageKey & imageExtension))
 
         Dim listViewItem As New ListViewItem
         With listViewItem
@@ -149,10 +161,6 @@ Public Class MainForm
                     End Sub)
     End Sub
 
-    Private Sub SaveToJpeg(image As Bitmap, imageKey As String)
-
-    End Sub
-
     Private Sub DisplayElapsedLabel()
         recordingLbl.Text = String.Format("Recording...[{0:00}:{1:00}:{2:00}]",
                                           stopwatch.Elapsed.Hours,
@@ -164,6 +172,22 @@ Public Class MainForm
         Dim fileName = String.Format("{0}{1}", listViewItem.ImageKey, listViewItem.Tag)
         Return Path.Combine(Path.GetTempPath, fileName)
     End Function
+
+    Private Shared Sub SaveToJpeg(image As Bitmap, fileName As String)
+
+        Dim codecInfo As ImageCodecInfo = ImageCodecInfo.GetImageEncoders.
+            FirstOrDefault(Function(x) x.FormatID = ImageFormat.Jpeg.Guid)
+
+        Dim encoderParams = New EncoderParameters(1)
+        encoderParams.Param(0) = New EncoderParameter(Encoder.Quality, 100L)
+
+        image.Save(fileName, codecInfo, encoderParams)
+
+    End Sub
+
+#End Region
+
+#Region " Controls Event Handlers "
 
     Private Sub videoSource_NewFrame(sender As Object, eventArgs As AForge.Video.NewFrameEventArgs)
         Dim frame = New Bitmap(eventArgs.Frame)
@@ -285,5 +309,7 @@ Public Class MainForm
         End If
 
     End Sub
+
+#End Region
 
 End Class
