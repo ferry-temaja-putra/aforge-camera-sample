@@ -14,6 +14,7 @@ Public Class MainForm
     Private currentVideoDeviceIndex As Integer
     Private videoWriter As VideoFileWriter
     Private stopwatch As Stopwatch
+    Private currentFrame As Image
 
     Private isStoppingRecording As Boolean
     Private isRecording As Boolean
@@ -206,11 +207,12 @@ Public Class MainForm
             StopRecording(New Bitmap(frame))
         End If
 
-        If videoPic.Image IsNot Nothing Then
-            videoPic.Image.Dispose()
+        If currentFrame IsNot Nothing Then
+            currentFrame.Dispose()
         End If
 
-        videoPic.Image = frame
+        currentFrame = frame
+        videoPic.Invalidate()
     End Sub
 
     Private Sub captureBtn_Click(sender As System.Object, e As System.EventArgs) Handles captureBtn.Click
@@ -307,6 +309,16 @@ Public Class MainForm
         If videoSource IsNot Nothing AndAlso videoSource.IsRunning Then
             ReleaseVideoSource()
         End If
+
+    End Sub
+
+    Private Sub videoPic_Paint(sender As Object, e As PaintEventArgs) Handles videoPic.Paint
+
+        If currentFrame Is Nothing Then Return
+
+        Dim frameWidth = videoPic.Height * currentFrame.Width \ currentFrame.Height
+
+        e.Graphics.DrawImage(currentFrame, 0, 0, frameWidth, videoPic.Height)
 
     End Sub
 
