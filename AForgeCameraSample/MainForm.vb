@@ -81,13 +81,17 @@ Public Class MainForm
 
     Private Sub PopulateResolutionControl()
 
-        resolutionCbo.Items.Clear()
+        captureResolutionCbo.Items.Clear()
+        previewResolutionCbo.Items.Clear()
 
         For Each capability In videoSource.VideoCapabilities
-            resolutionCbo.Items.Add(String.Format("{0} x {1} - {2} FPS", capability.FrameSize.Width, capability.FrameSize.Height, capability.AverageFrameRate))
+            Dim itemText = String.Format("{0} x {1} - {2} FPS", capability.FrameSize.Width, capability.FrameSize.Height, capability.AverageFrameRate)
+            previewResolutionCbo.Items.Add(itemText)
+            captureResolutionCbo.Items.Add(itemText)
         Next
 
-        resolutionCbo.SelectedIndex = 0
+        previewResolutionCbo.SelectedIndex = 0
+        captureResolutionCbo.SelectedIndex = 0
 
     End Sub
 
@@ -241,8 +245,8 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub resolutionCbo_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles resolutionCbo.SelectedIndexChanged
-        SetVideoResolution(videoSource.VideoCapabilities(resolutionCbo.SelectedIndex))
+    Private Sub resolutionCbo_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles previewResolutionCbo.SelectedIndexChanged
+        SetVideoResolution(videoSource.VideoCapabilities(previewResolutionCbo.SelectedIndex))
     End Sub
 
     Private Sub nextCameraBtn_Click(sender As System.Object, e As System.EventArgs) Handles nextCameraBtn.Click

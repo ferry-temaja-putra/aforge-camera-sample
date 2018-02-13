@@ -33,11 +33,14 @@ Partial Class MainForm
         Me.CopyPathToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.captureIml = New System.Windows.Forms.ImageList(Me.components)
         Me.commandPnl = New System.Windows.Forms.Panel()
-        Me.resolutionCbo = New System.Windows.Forms.ComboBox()
+        Me.previewResolutionCbo = New System.Windows.Forms.ComboBox()
         Me.nextCameraBtn = New System.Windows.Forms.Button()
         Me.recordBtn = New System.Windows.Forms.Button()
         Me.captureBtn = New System.Windows.Forms.Button()
         Me.elapsedTmr = New System.Windows.Forms.Timer(Me.components)
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.captureResolutionCbo = New System.Windows.Forms.ComboBox()
         Me.videoPnl.SuspendLayout()
         CType(Me.videoPic, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.captureImageCtx.SuspendLayout()
@@ -68,7 +71,7 @@ Partial Class MainForm
         Me.videoPnl.Name = "videoPnl"
         Me.videoPnl.Padding = New System.Windows.Forms.Padding(10)
         Me.videoPnl.Size = New System.Drawing.Size(584, 358)
-        Me.videoPnl.TabIndex = 7
+        Me.videoPnl.TabIndex = 1
         '
         'videoPic
         '
@@ -97,7 +100,7 @@ Partial Class MainForm
         Me.captureLsv.Location = New System.Drawing.Point(200, 361)
         Me.captureLsv.Name = "captureLsv"
         Me.captureLsv.Size = New System.Drawing.Size(584, 200)
-        Me.captureLsv.TabIndex = 5
+        Me.captureLsv.TabIndex = 3
         Me.captureLsv.UseCompatibleStateImageBehavior = False
         '
         'captureImageCtx
@@ -127,7 +130,10 @@ Partial Class MainForm
         'commandPnl
         '
         Me.commandPnl.BackColor = System.Drawing.SystemColors.Window
-        Me.commandPnl.Controls.Add(Me.resolutionCbo)
+        Me.commandPnl.Controls.Add(Me.Label2)
+        Me.commandPnl.Controls.Add(Me.captureResolutionCbo)
+        Me.commandPnl.Controls.Add(Me.Label1)
+        Me.commandPnl.Controls.Add(Me.previewResolutionCbo)
         Me.commandPnl.Controls.Add(Me.nextCameraBtn)
         Me.commandPnl.Controls.Add(Me.recordBtn)
         Me.commandPnl.Controls.Add(Me.captureBtn)
@@ -135,16 +141,16 @@ Partial Class MainForm
         Me.commandPnl.Location = New System.Drawing.Point(0, 0)
         Me.commandPnl.Name = "commandPnl"
         Me.commandPnl.Size = New System.Drawing.Size(200, 561)
-        Me.commandPnl.TabIndex = 6
+        Me.commandPnl.TabIndex = 0
         '
-        'resolutionCbo
+        'previewResolutionCbo
         '
-        Me.resolutionCbo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.resolutionCbo.FormattingEnabled = True
-        Me.resolutionCbo.Location = New System.Drawing.Point(11, 150)
-        Me.resolutionCbo.Name = "resolutionCbo"
-        Me.resolutionCbo.Size = New System.Drawing.Size(171, 28)
-        Me.resolutionCbo.TabIndex = 3
+        Me.previewResolutionCbo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.previewResolutionCbo.FormattingEnabled = True
+        Me.previewResolutionCbo.Location = New System.Drawing.Point(11, 173)
+        Me.previewResolutionCbo.Name = "previewResolutionCbo"
+        Me.previewResolutionCbo.Size = New System.Drawing.Size(171, 28)
+        Me.previewResolutionCbo.TabIndex = 3
         '
         'nextCameraBtn
         '
@@ -176,6 +182,33 @@ Partial Class MainForm
         'elapsedTmr
         '
         Me.elapsedTmr.Interval = 1000
+        '
+        'Label1
+        '
+        Me.Label1.Location = New System.Drawing.Point(12, 147)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(170, 23)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "Preview Resolution"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'Label2
+        '
+        Me.Label2.Location = New System.Drawing.Point(12, 204)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(170, 23)
+        Me.Label2.TabIndex = 6
+        Me.Label2.Text = "Capture Resolution"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'captureResolutionCbo
+        '
+        Me.captureResolutionCbo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.captureResolutionCbo.FormattingEnabled = True
+        Me.captureResolutionCbo.Location = New System.Drawing.Point(11, 230)
+        Me.captureResolutionCbo.Name = "captureResolutionCbo"
+        Me.captureResolutionCbo.Size = New System.Drawing.Size(171, 28)
+        Me.captureResolutionCbo.TabIndex = 4
         '
         'MainForm
         '
@@ -209,9 +242,12 @@ Partial Class MainForm
     Friend WithEvents CopyPathToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents captureIml As ImageList
     Friend WithEvents commandPnl As Panel
-    Friend WithEvents resolutionCbo As ComboBox
+    Friend WithEvents previewResolutionCbo As ComboBox
     Friend WithEvents nextCameraBtn As Button
     Friend WithEvents recordBtn As Button
     Friend WithEvents captureBtn As Button
     Friend WithEvents elapsedTmr As Timer
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents captureResolutionCbo As ComboBox
 End Class
